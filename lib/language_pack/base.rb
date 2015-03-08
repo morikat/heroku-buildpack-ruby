@@ -16,7 +16,7 @@ class LanguagePack::Base
   include LanguagePack::ShellHelpers
 
   VENDOR_URL           = ENV['BUILDPACK_VENDOR_URL'] || "https://s3-external-1.amazonaws.com/heroku-buildpack-ruby"
-  DEFAULT_LEGACY_STACK = "cedar"
+  DEFAULT_LEGACY_STACK = "cedar-14"
   ROOT_DIR             = File.expand_path("../../..", __FILE__)
 
   attr_reader :build_path, :cache
@@ -27,7 +27,7 @@ class LanguagePack::Base
   def initialize(build_path, cache_path=nil)
      self.class.instrument "base.initialize" do
       @build_path    = build_path
-      @stack         = ENV.fetch("STACK")
+      @stack         = "cedar-14" #ENV.fetch("STACK")
       @cache         = LanguagePack::Cache.new(cache_path) if cache_path
       @metadata      = LanguagePack::Metadata.new(@cache)
       @bundler_cache = LanguagePack::BundlerCache.new(@cache, @stack)
